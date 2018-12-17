@@ -30,7 +30,8 @@ def contact_page(request):
     context = {
         'title': 'this is contact page',
         'content': 'this is contact page yall',
-        'form': contact_form
+        'form': contact_form,
+        'brand': 'new Hocmax'
     }
     if contact_form.is_valid():
         print(contact_form.cleaned_data)
