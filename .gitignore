@@ -1,4 +1,8 @@
 .vscode/
 ._pycache_/
+ecommerce/__pycache__/
+products/__pycache__/
 migrations/
 *.pyc
+.DS_Store
+templates/.DS_Store

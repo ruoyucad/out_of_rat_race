@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # my components
     'products',
     'search',
+    'tags'
 ]
 
 MIDDLEWARE = [
