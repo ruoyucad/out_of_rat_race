@@ -8,6 +8,7 @@ from .forms import RegisterForm
 
 
 def home_page(request):
+
     context = {
         'title': 'hello there!',
         'content': 'this is main page yall'

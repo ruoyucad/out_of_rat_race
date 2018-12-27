@@ -6,6 +6,7 @@ from django.db.models.signals import pre_save
 from django.urls import reverse
 from .utils import unique_slug_generator
 
+
 # Create your models here.
 
 
@@ -29,11 +30,13 @@ class ProductQuerySet(models.query.QuerySet):
     def featured(self):
         return self.filter(featured=True, active=True)
 
-    def search(self,query):
+    def search(self, query):
         lookups = (Q(title__icontains=query) |
-                   Q(description__icontains=query)|
-                   Q(price__icontains=query))
+                   Q(description__icontains=query) |
+                   Q(price__icontains=query) |
+                   Q(tag__title__icontains=query))
         return self.filter(lookups).distinct()
+
 
 class ProductManager(models.Manager):
     def get_queryset(self):
@@ -51,19 +54,20 @@ class ProductManager(models.Manager):
             return qs.first()
         return None
 
-    def search(self,query):
+    def search(self, query):
         lookups = Q(title__icontains=query) | Q(description__icontains=query)
         return self.get_queryset().active().search(query)
 
+
 class Product(models.Model):
-    title         = models.CharField(max_length=120)
-    slug          = models.SlugField(blank=True, unique=True)
-    description   = models.TextField()
-    price         = models.DecimalField(max_digits=10, decimal_places=2, default=0.99)
-    image         = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
-    featured      = models.BooleanField(default=False)
-    active        = models.BooleanField(default=True)
-    timestamp     = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=120)
+    slug = models.SlugField(blank=True, unique=True)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.99)
+    image = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
+    featured = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     objects = ProductManager()
 
